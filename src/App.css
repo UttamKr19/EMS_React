@@ -38,11 +38,18 @@
 } */
 
 .footer{
-  position: absolute;
+  position: fixed;
   bottom:0;
   width: 100%;
-  height: 50px;
+  height: 30px;
   background-color: #282c34;
   text-align: center;
   color: lightgrey;
+}
+
+.bg-img{
+  background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.baltana.com%2Fbackgrounds%2F4k-blurred-backgrounds-hd-wallpapers-40696.html&psig=AOvVaw0ToQ1e9dFinYNk9HIUOLuQ&ust=1633677987797000&source=images&cd=vfe&ved=0CAkQjRxqFwoTCLjdqfXit_MCFQAAAAAdAAAAABAD');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }

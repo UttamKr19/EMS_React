@@ -13,7 +13,8 @@ export default class FooterComponent extends Component {
         return (
             <div>
                 <footer className="footer">
-                    <span className="text-muted">All rights reserved 2021</span>
+                <i className="fa fa-copyright" aria-hidden="true"></i>
+                <span className="text-muted"> Uttam Kumar | All rights reserved 2021</span>
                 </footer>
             </div>
         )

@@ -1,6 +1,9 @@
 import { getByTitle } from '@testing-library/react';
 import React, { Component } from 'react'
 import EmployeeService from '../services/EmployeeService';
+import "react-datepicker/dist/react-datepicker.css";
+import ReactDatePicker from 'react-datepicker';
+import '../App.css'
 
 export default class SaveEmployeeComponent extends Component {
     constructor(props) {
@@ -10,18 +13,34 @@ export default class SaveEmployeeComponent extends Component {
             id: this.props.match.params.id,
             employeeName: "",
             employeeId: "",
-            salary: ""
+            salary: "",
+            image: "",
+            photoUrl: "",
+            address: "",
+            department: "",
+            dateOfJoining: Date.now(),
+            dateOfBirth: Date.now()
         }
 
         this.changeIdHandler = this.changeIdHandler.bind(this);
         this.changeNameHandler = this.changeNameHandler.bind(this);
-        this.changeIdHandler = this.changeIdHandler.bind(this);
+        this.changeSalaryHandler = this.changeSalaryHandler.bind(this);
+        this.changePhotoHandler = this.changePhotoHandler.bind(this);
+        this.changeAddressHandler = this.changeAddressHandler.bind(this);
+        this.changeDepartmentHandler = this.changeDepartmentHandler.bind(this);
+        this.changeDateOfJoiningHandler = this.changeDateOfJoiningHandler.bind(this);
+        this.changeDateOfBirthHandler = this.changeDateOfBirthHandler.bind(this);
+
         this.saveEmployee = this.saveEmployee.bind(this);
     }
 
     componentDidMount() {
         if (this.state.id === "_add") {
-            return
+            console.log("dshfljadslfjsdljflasdjlfjasdljflsd")
+            this.setState({
+                dateOfJoining: Date.now(),
+                dateOfBirth: Date.now()
+            });
         }
         else {
             EmployeeService.getEmployeeById(this.state.id).then(res => {
@@ -29,7 +48,12 @@ export default class SaveEmployeeComponent extends Component {
                 this.setState({
                     employeeName: employee.employeeName,
                     employeeId: employee.employeeId,
-                    salary: employee.salary
+                    salary: employee.salary,
+                    photoUrl: employee.photoUrl,
+                    address: employee.address,
+                    department: employee.department,
+                    dateOfJoining: Date.parse(employee.dateOfJoining.toString()),
+                    dateOfBirth: Date.parse(employee.dateOfBirth.toString())
                 })
             })
         }
@@ -45,7 +69,27 @@ export default class SaveEmployeeComponent extends Component {
     }
 
     changeSalaryHandler = (event) => {
-        this.setState({ salary: parseInt(event.target.value) })
+        this.setState({ salary: parseFloat(event.target.value) })
+    }
+
+    changePhotoHandler = (event) => {
+        this.setState({ photoUrl: event.target.value })
+    }
+
+    changeAddressHandler = (event) => {
+        this.setState({ address: event.target.value })
+    }
+
+    changeDepartmentHandler = (event) => {
+        this.setState({ department: event.target.value })
+    }
+
+    changeDateOfJoiningHandler = (date) => {
+        this.setState({ dateOfJoining: date })
+    }
+
+    changeDateOfBirthHandler = (date) => {
+        this.setState({ dateOfBirth: date })
     }
 
     cancel() {
@@ -58,9 +102,15 @@ export default class SaveEmployeeComponent extends Component {
         let employee = {
             employeeId: this.state.employeeId,
             employeeName: this.state.employeeName,
-            salary: this.state.salary
+            salary: this.state.salary,
+            photoUrl: this.state.photoUrl,
+            address: this.state.address,
+            department: this.state.department,
+            dateOfJoining: this.state.dateOfJoining,
+            dateOfBirth: this.state.dateOfBirth
         }
 
+        console.log(employee);
         if (this.state.id == '_add') {
             EmployeeService.addEmployee(employee).then(res => {
                 this.props.history.push('/employees');
@@ -74,7 +124,7 @@ export default class SaveEmployeeComponent extends Component {
 
     }
 
-    getTitle(){
+    getTitle() {
         if (this.state.id === '_add') {
             return "Add employee"
         }
@@ -83,7 +133,7 @@ export default class SaveEmployeeComponent extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{marginBottom:"50px"}}>
 
                 <div className="container">
                     <div className="row">
@@ -95,12 +145,23 @@ export default class SaveEmployeeComponent extends Component {
                                         <div className="form-group">
                                             <label for="employeeName">Name</label>
                                             <input type="text" className="form-control" id="employeeName" placeholder="Name"
-                                                value={this.state.employeeName} onChange={this.changeNameHandler} />
+                                                value={this.state.employeeName} onChange={this.changeNameHandler} 
+                                                required="required" />
                                         </div>
+                                        {
+                                            this.state.id != '_add' &&
+                                            <div className="form-group">
+                                                <label for="employeeId">Employee id</label>
+                                                <input type="number" className="form-control" id="employeeId" placeholder="Employee Id"
+                                                    value={this.state.employeeId} onChange={this.changeIdHandler} />
+                                            </div>
+                                        }
+
+
                                         <div className="form-group">
-                                            <label for="employeeId">Employee id</label>
-                                            <input type="number" className="form-control" id="employeeId" placeholder="Employee Id"
-                                                value={this.state.employeeId} onChange={this.changeIdHandler} />
+                                            <label for="department">Department</label>
+                                            <input type="text" className="form-control" id="department" placeholder="department"
+                                                value={this.state.department} onChange={this.changeDepartmentHandler} />
                                         </div>
 
                                         <div className="form-group">
@@ -110,29 +171,54 @@ export default class SaveEmployeeComponent extends Component {
                                         </div>
                                     </div>
 
-                                    <hr />
-
-                                    {/* <div className="form-group">
-                                        <label for="inputAddress2">Address 2</label>
-                                        <input type="text" className="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
+                                    <div className="form-group">
+                                        <label for="address">Address</label>
+                                        <input type="text" className="form-control" id="address" placeholder="address"
+                                            value={this.state.address} onChange={this.changeAddressHandler} />
                                     </div>
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <label for="inputCity">City</label>
-                                            <input type="text" className="form-control" id="inputCity" />
-                                        </div>
-                                        <div className="form-group col-md-4">
-                                            <label for="inputState">State</label>
-                                            <select id="inputState" className="form-control">
-                                                <option selected>Choose...</option>
-                                                <option>...</option>
-                                            </select>
-                                        </div>
-                                    </div> */}
 
-                                    <button type="submit" className="btn btn-primary" onClick={this.saveEmployee}>Save</button>
-                                    <button className="btn btn-secondary" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancel</button>
+                                    <div className="form-group">
+                                        <label for="photoUrl">Photo url</label>
+                                        <input type="text" className="form-control" id="photoUrl" placeholder="photo Url"
+                                            value={this.state.photoUrl} onChange={this.changePhotoHandler} />
+                                    </div>
+
+
+                                    <div style={{ float: "left" }}>
+                                        <div className="form-group">
+                                            <label for="dateOfJoining">Date of Joining</label>
+                                            <ReactDatePicker
+                                                id="dateOfJoining"
+                                                selected={this.state.dateOfJoining}
+                                                dateFormat="MM/dd/yyyy"
+                                                onChange={date => this.changeDateOfJoiningHandler(date)}
+                                                placeholderText="MM/dd/yyyy"
+                                            />
+                                        </div>
+
+
+                                        <div className="form-group">
+                                            <label for="dateOfBirth">Date of Birth</label>
+                                            <ReactDatePicker
+                                                id="dateOfBirth"
+                                                selected={this.state.dateOfBirth}
+                                                dateFormat="MM/dd/yyyy"
+                                                onChange={date => this.changeDateOfBirthHandler(date)}
+                                                placeholderText="MM/dd/yyyy"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group" style={{ float: "right" }}>
+                                        <img src={this.state.photoUrl}
+                                            style={{ width: "100px", height: "100px" }} />
+                                    </div>
                                 </form>
+                            </div>
+
+                            <div className="container">
+                                <button type="submit" className="btn-lg btn-success" onClick={this.saveEmployee}>Save</button>
+                                <button className="btn btn-outline-secondary" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancel</button>
                             </div>
                         </div>
                     </div>

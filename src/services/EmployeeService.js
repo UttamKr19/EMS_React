@@ -1,7 +1,8 @@
 
 import axios from 'axios';
+import EMPLOYEE_API_BASE_URL from '../api/EmployeeServiceApi';
 
-const EMPLOYEE_API_BASE_URL="https://webapp-ems.herokuapp.com";
+
 
 class EmployeeService{
     getEmployees(){
