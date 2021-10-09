@@ -102,7 +102,7 @@ export default class SaveEmployeeComponent extends Component {
         let doj = this.state.dateOfJoining;
         doj = doj.getDate() + "/" + (doj.getMonth() + 1) + "/" + doj.getFullYear();
         let dob = this.state.dateOfBirth;
-        dob = dob.getDate() + "/" + (dob.getMonth() + 1) + "/" + dob.getYear();
+        dob = dob.getDate() + "/" + (dob.getMonth() + 1) + "/" + dob.getFullYear();
 
         let employee = {
             employeeId: this.state.employeeId,
