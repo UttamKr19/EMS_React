@@ -99,9 +99,9 @@ export default class SaveEmployeeComponent extends Component {
     saveEmployee = (e) => {
         e.preventDefault();
 
-        let doj = this.state.dateOfJoining;
+        let doj = new Date(this.state.dateOfJoining);
         doj = doj.getDate() + "/" + (doj.getMonth() + 1) + "/" + doj.getFullYear();
-        let dob = this.state.dateOfBirth;
+        let dob = new Date(this.state.dateOfBirth);
         dob = dob.getDate() + "/" + (dob.getMonth() + 1) + "/" + dob.getFullYear();
 
         let employee = {
@@ -149,7 +149,7 @@ export default class SaveEmployeeComponent extends Component {
                                 <form>
                                     <div className="form-row">
                                         <div className="form-group">
-                                            <label for="employeeName">Name</label>
+                                            <label htmlFor="employeeName">Name</label>
                                             <input type="text" className="form-control" id="employeeName" placeholder="name"
                                                 value={this.state.employeeName} onChange={this.changeNameHandler}
                                                 required="required" />
@@ -157,7 +157,7 @@ export default class SaveEmployeeComponent extends Component {
                                         {
                                             this.state.id !== '_add' &&
                                             <div className="form-group">
-                                                <label for="employeeId">Employee id</label>
+                                                <label htmlFor="employeeId">Employee id</label>
                                                 <input type="number" className="form-control" id="employeeId" placeholder="Employee Id"
                                                     value={this.state.employeeId} onChange={this.changeIdHandler} />
                                             </div>
@@ -165,35 +165,41 @@ export default class SaveEmployeeComponent extends Component {
 
 
                                         <div className="form-group">
-                                            <label for="department">Department</label>
+                                            <label htmlFor="department">Department</label>
                                             <input type="text" className="form-control" id="department" placeholder="department"
                                                 value={this.state.department} onChange={this.changeDepartmentHandler} />
                                         </div>
 
                                         <div className="form-group">
-                                            <label for="salary">Salary</label>
+                                            <label htmlFor="salary">Salary</label>
                                             <input type="number" className="form-control" id="salary" placeholder="salary"
                                                 value={this.state.salary} onChange={this.changeSalaryHandler} />
                                         </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label for="address">Address</label>
+                                        <label htmlFor="address">Address</label>
                                         <input type="text" className="form-control" id="address" placeholder="address"
                                             value={this.state.address} onChange={this.changeAddressHandler} />
                                     </div>
 
-                                    <div className="form-group">
-                                        <label for="photoUrl">Photo url</label>
+                                    <div className="form-group" >
+                                        <label htmlFor="photoUrl">Photo url</label>
                                         <input type="text" className="form-control" id="photoUrl" placeholder="paste photo link"
-                                            value={this.state.photoUrl} onChange={this.changePhotoHandler} />
+                                            value={this.state.photoUrl} onChange={this.changePhotoHandler}
+                                            style={{ width: "80%"}} />
+
+                                        <img src={this.state.photoUrl}
+                                            style={{ float:"right", width:"20%",width: "60px", height: "60px",marginTop:"-50px" }} />
+
+
                                     </div>
 
                                     <div>
 
                                         <div style={{ float: "left" }}>
                                             <div className="form-group">
-                                                <label for="dateOfJoining">Date of Joining</label>
+                                                <label htmlFor="dateOfJoining">Date of Joining</label>
                                                 <ReactDatePicker
                                                     id="dateOfJoining"
                                                     selected={this.state.dateOfJoining}
@@ -205,7 +211,7 @@ export default class SaveEmployeeComponent extends Component {
 
 
                                             <div className="form-group">
-                                                <label for="dateOfBirth">Date of Birth</label>
+                                                <label htmlFor="dateOfBirth">Date of Birth</label>
                                                 <ReactDatePicker
                                                     id="dateOfBirth"
                                                     selected={this.state.dateOfBirth}
@@ -216,10 +222,7 @@ export default class SaveEmployeeComponent extends Component {
                                             </div>
                                         </div>
 
-                                        <div className="form-group" style={{ float: "right", marginTop: "10px" }}>
-                                            <img src={this.state.photoUrl}
-                                                style={{ width: "100px", height: "100px" }} />
-                                        </div>
+
 
                                     </div>
                                 </form>

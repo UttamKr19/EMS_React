@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import '../App.css'
 
 export class HeaderComponent extends Component {
     constructor(props) {
@@ -11,12 +13,15 @@ export class HeaderComponent extends Component {
 
     render() {
         return (
-            <div>
-                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div><a href="#" className="navbar-brand" >Employee Management Web app</a></div>
+            <header className="text-white bg-dark header"
+                style={{ marginBottom: "10px", verticalAlign: "middle" }}>
+                <Link to='/'>
+                    <i className="fa fa-home" aria-hidden="true"
+                        style={{ float: "left", paddingLeft: "2px", paddingRight: "2px" }}>
+                    </i>
+                </Link>
 
-                </nav>
-            </div>
+                Employee Management Web App</header>
         )
     }
 }

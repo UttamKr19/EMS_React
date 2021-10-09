@@ -48,7 +48,7 @@ export default class ListEmployeeComponent extends Component {
                 <div>
                     <i className="btn btn-success btn-lg fas fa-plus-circle"
                         onClick={this.addEmployee}>
-                        <span style={{ fontFamily: 'fantasy', marginLeft: "10px" }}>Add Employee</span>
+                        <span style={{ fontFamily: 'sans-serif', marginLeft: "10px" }}>Add Employee</span>
                     </i>
                 </div>
 
@@ -58,10 +58,9 @@ export default class ListEmployeeComponent extends Component {
                             <tr>
                                 <th scope="col">Photo </th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Employee Id</th>
                                 <th scope="col">Department</th>
-                                <th scope="col">Joining date</th>
-                                <th scope="col">View/Edit</th>
+                                <th scope="col">DOB</th>
+                                <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                             </tr>
                         </thead>
@@ -75,21 +74,14 @@ export default class ListEmployeeComponent extends Component {
                                                 style={{ width: "50px", height: "50px" , cursor:'pointer'}}></img>
                                             </td>
                                             
-                                            <td><b>{employee.employeeName}</b></td>
-                                            
-                                            <td>{employee.employeeId}</td>
+                                            <td><b onClick={() => this.viewEmployee(employee.employeeId)}>{employee.employeeName}</b></td>
                                             
                                             <td>{employee.department}</td>
                                             
-                                            <td>{employee.dateOfJoining != null ? employee.dateOfJoining.toString().split('T')[0] : " - "}</td>
+                                            <td>{employee.dateOfBirth != null ? employee.dateOfBirth.toString().split('T')[0] : " - "}</td>
                                             
                                             <td>
-                                                <button className="btn"
-                                                    onClick={() => this.viewEmployee(employee.employeeId)}>
-                                                    <i className="fa fa-info-circle" aria-hidden="true"></i>
-                                                </button>
-
-                                                <button className="btn"
+                                                <button className="btn" style={{marginLeft:"0px"}}
                                                     onClick={() => this.updateEmployee(employee.employeeId)}>
                                                     <i className="fa fa-edit" aria-hidden="true"></i>
                                                 </button>
