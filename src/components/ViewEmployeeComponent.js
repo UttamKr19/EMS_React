@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import EmployeeService from '../services/EmployeeService'
+import moment from 'moment'
 
 export default class ViewEmployeeComponent extends Component {
     constructor(props) {
@@ -19,9 +20,10 @@ export default class ViewEmployeeComponent extends Component {
                 photoUrl: res.data.photoUrl,
                 department: res.data.department,
                 address: res.data.address,
-                dateOfJoining: Date.parse(res.data.dateOfJoining.toString()),
-                dateOfBirth: Date.parse(res.data.dateOfBirth.toString())
+                dateOfJoining: moment(res.data.dateOfJoining.toString(),"DD/MM/YYYY").toDate(),
+                dateOfBirth: moment(res.data.dateOfBirth.toString(),"DD/MM/YYYY").toDate()
             })
+
         })
     }
 
@@ -58,9 +60,9 @@ export default class ViewEmployeeComponent extends Component {
                             <div className="card-body">
                                 <h5 className="card-title">More details</h5>
                                 <p className="card-text"> Department : {this.state.department}</p>
-                                <p className="card-text"> Date of birth : {new Date(this.state.dateOfBirth).toString().substr(0,15)} </p>
-                                <p className="card-text"> Date of joining : {new Date(this.state.dateOfJoining).toString().substr(0,15)} </p>
-                                <p className="card-text"> Salary : {this.state.salary}</p>
+                                <p className="card-text"> Date of birth : {new Date(this.state.dateOfBirth).toString()} </p>
+                                <p className="card-text"> Date of joining :{new Date(this.state.dateOfJoining).toString()}  </p>
+                                <p className="card-text"> Salary : {this.state.salary} </p>
                             </div>
                         </div>
                     </div>

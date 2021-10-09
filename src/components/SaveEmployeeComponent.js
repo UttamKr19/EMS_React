@@ -1,9 +1,9 @@
-import { getByTitle } from '@testing-library/react';
 import React, { Component } from 'react'
 import EmployeeService from '../services/EmployeeService';
 import "react-datepicker/dist/react-datepicker.css";
 import ReactDatePicker from 'react-datepicker';
 import '../App.css'
+import moment from 'moment'
 
 export default class SaveEmployeeComponent extends Component {
     constructor(props) {
@@ -18,8 +18,8 @@ export default class SaveEmployeeComponent extends Component {
             photoUrl: "",
             address: "",
             department: "",
-            dateOfJoining: "",
-            dateOfBirth: ""
+            dateOfJoining: Date.now(),
+            dateOfBirth: Date.now()
         }
 
         this.changeIdHandler = this.changeIdHandler.bind(this);
@@ -51,8 +51,8 @@ export default class SaveEmployeeComponent extends Component {
                     photoUrl: employee.photoUrl,
                     address: employee.address,
                     department: employee.department,
-                    dateOfJoining: employee.dateOfJoining.toString(),
-                    dateOfBirth: employee.dateOfBirth.toString()
+                    dateOfJoining: moment(res.data.dateOfJoining.toString(), "DD/MM/YYYY").toDate(),
+                    dateOfBirth: moment(res.data.dateOfBirth.toString(), "DD/MM/YYYY").toDate()
                 })
             })
         }
@@ -84,6 +84,7 @@ export default class SaveEmployeeComponent extends Component {
     }
 
     changeDateOfJoiningHandler = (date) => {
+        console.log('joining date ' + date)
         this.setState({ dateOfJoining: date })
     }
 
@@ -98,6 +99,11 @@ export default class SaveEmployeeComponent extends Component {
     saveEmployee = (e) => {
         e.preventDefault();
 
+        let doj = this.state.dateOfJoining;
+        doj = doj.getDate() + "/" + (doj.getMonth() + 1) + "/" + doj.getFullYear();
+        let dob = this.state.dateOfBirth;
+        dob = dob.getDate() + "/" + (dob.getMonth() + 1) + "/" + dob.getYear();
+
         let employee = {
             employeeId: this.state.employeeId,
             employeeName: this.state.employeeName,
@@ -105,12 +111,13 @@ export default class SaveEmployeeComponent extends Component {
             photoUrl: this.state.photoUrl,
             address: this.state.address,
             department: this.state.department,
-            dateOfJoining: this.state.dateOfJoining,
-            dateOfBirth: this.state.dateOfBirth
+            dateOfJoining: doj,
+            dateOfBirth: dob
         }
 
         console.log(employee);
-        if (this.state.id == '_add') {
+
+        if (this.state.id === '_add') {
             EmployeeService.addEmployee(employee).then(res => {
                 this.props.history.push('/employees');
             })
@@ -148,7 +155,7 @@ export default class SaveEmployeeComponent extends Component {
                                                 required="required" />
                                         </div>
                                         {
-                                            this.state.id != '_add' &&
+                                            this.state.id !== '_add' &&
                                             <div className="form-group">
                                                 <label for="employeeId">Employee id</label>
                                                 <input type="number" className="form-control" id="employeeId" placeholder="Employee Id"
@@ -189,7 +196,7 @@ export default class SaveEmployeeComponent extends Component {
                                                 <label for="dateOfJoining">Date of Joining</label>
                                                 <ReactDatePicker
                                                     id="dateOfJoining"
-                                                    selected={Date.parse(this.state.dateOfJoining.toString())}
+                                                    selected={this.state.dateOfJoining}
                                                     dateFormat="dd/MM/yyyy"
                                                     onChange={date => this.changeDateOfJoiningHandler(date)}
                                                     placeholderText="dd/mm/yyyy"
@@ -201,7 +208,7 @@ export default class SaveEmployeeComponent extends Component {
                                                 <label for="dateOfBirth">Date of Birth</label>
                                                 <ReactDatePicker
                                                     id="dateOfBirth"
-                                                    selected={Date.parse(this.state.dateOfBirth.toString())}
+                                                    selected={this.state.dateOfBirth}
                                                     dateFormat="dd/MM/yyyy"
                                                     onChange={date => this.changeDateOfBirthHandler(date)}
                                                     placeholderText="dd/mm/yyyy"
@@ -209,7 +216,7 @@ export default class SaveEmployeeComponent extends Component {
                                             </div>
                                         </div>
 
-                                        <div className="form-group" style={{ float: "right",marginTop:"10px" }}>
+                                        <div className="form-group" style={{ float: "right", marginTop: "10px" }}>
                                             <img src={this.state.photoUrl}
                                                 style={{ width: "100px", height: "100px" }} />
                                         </div>
@@ -219,9 +226,9 @@ export default class SaveEmployeeComponent extends Component {
                             </div>
 
                             <div className="container">
-                                <button type="submit" className="btn-lg btn-success" style={{width:"40%"}} 
+                                <button type="submit" className="btn-lg btn-success" style={{ width: "40%" }}
                                     onClick={this.saveEmployee}>Save</button>
-                                <button className="btn btn-outline-secondary" 
+                                <button className="btn btn-outline-secondary"
                                     onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancel</button>
                             </div>
                         </div>

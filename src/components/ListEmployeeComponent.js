@@ -27,7 +27,7 @@ export default class ListEmployeeComponent extends Component {
     }
 
     deleteEmployee(id) {
-        const r = window.confirm("Do you really want to delete this employee information?"); if (r == true) {
+        const r = window.confirm("Do you really want to delete this employee information?"); if (r === true) {
             EmployeeService.deleteEmployee(id).then(res => {
                 this.setState({ employees: this.state.employees.filter(employee => employee.employeeId !== id) });
             });
