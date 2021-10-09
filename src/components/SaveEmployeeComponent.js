@@ -18,8 +18,8 @@ export default class SaveEmployeeComponent extends Component {
             photoUrl: "",
             address: "",
             department: "",
-            dateOfJoining: Date.now(),
-            dateOfBirth: Date.now()
+            dateOfJoining: "",
+            dateOfBirth: ""
         }
 
         this.changeIdHandler = this.changeIdHandler.bind(this);
@@ -36,7 +36,6 @@ export default class SaveEmployeeComponent extends Component {
 
     componentDidMount() {
         if (this.state.id === "_add") {
-            console.log("dshfljadslfjsdljflasdjlfjasdljflsd")
             this.setState({
                 dateOfJoining: Date.now(),
                 dateOfBirth: Date.now()
@@ -52,8 +51,8 @@ export default class SaveEmployeeComponent extends Component {
                     photoUrl: employee.photoUrl,
                     address: employee.address,
                     department: employee.department,
-                    dateOfJoining: Date.parse(employee.dateOfJoining.toString()),
-                    dateOfBirth: Date.parse(employee.dateOfBirth.toString())
+                    dateOfJoining: employee.dateOfJoining.toString(),
+                    dateOfBirth: employee.dateOfBirth.toString()
                 })
             })
         }
@@ -133,7 +132,7 @@ export default class SaveEmployeeComponent extends Component {
 
     render() {
         return (
-            <div style={{marginBottom:"50px"}}>
+            <div style={{ marginBottom: "50px" }}>
 
                 <div className="container">
                     <div className="row">
@@ -144,8 +143,8 @@ export default class SaveEmployeeComponent extends Component {
                                     <div className="form-row">
                                         <div className="form-group">
                                             <label for="employeeName">Name</label>
-                                            <input type="text" className="form-control" id="employeeName" placeholder="Name"
-                                                value={this.state.employeeName} onChange={this.changeNameHandler} 
+                                            <input type="text" className="form-control" id="employeeName" placeholder="name"
+                                                value={this.state.employeeName} onChange={this.changeNameHandler}
                                                 required="required" />
                                         </div>
                                         {
@@ -179,46 +178,51 @@ export default class SaveEmployeeComponent extends Component {
 
                                     <div className="form-group">
                                         <label for="photoUrl">Photo url</label>
-                                        <input type="text" className="form-control" id="photoUrl" placeholder="photo Url"
+                                        <input type="text" className="form-control" id="photoUrl" placeholder="paste photo link"
                                             value={this.state.photoUrl} onChange={this.changePhotoHandler} />
                                     </div>
 
+                                    <div>
 
-                                    <div style={{ float: "left" }}>
-                                        <div className="form-group">
-                                            <label for="dateOfJoining">Date of Joining</label>
-                                            <ReactDatePicker
-                                                id="dateOfJoining"
-                                                selected={this.state.dateOfJoining}
-                                                dateFormat="MM/dd/yyyy"
-                                                onChange={date => this.changeDateOfJoiningHandler(date)}
-                                                placeholderText="MM/dd/yyyy"
-                                            />
+                                        <div style={{ float: "left" }}>
+                                            <div className="form-group">
+                                                <label for="dateOfJoining">Date of Joining</label>
+                                                <ReactDatePicker
+                                                    id="dateOfJoining"
+                                                    selected={Date.parse(this.state.dateOfJoining)}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    onChange={date => this.changeDateOfJoiningHandler(date)}
+                                                    placeholderText="dd/mm/yyyy"
+                                                />
+                                            </div>
+
+
+                                            <div className="form-group">
+                                                <label for="dateOfBirth">Date of Birth</label>
+                                                <ReactDatePicker
+                                                    id="dateOfBirth"
+                                                    selected={Date.parse(this.state.dateOfBirth)}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    onChange={date => this.changeDateOfBirthHandler(date)}
+                                                    placeholderText="dd/mm/yyyy"
+                                                />
+                                            </div>
                                         </div>
 
-
-                                        <div className="form-group">
-                                            <label for="dateOfBirth">Date of Birth</label>
-                                            <ReactDatePicker
-                                                id="dateOfBirth"
-                                                selected={this.state.dateOfBirth}
-                                                dateFormat="MM/dd/yyyy"
-                                                onChange={date => this.changeDateOfBirthHandler(date)}
-                                                placeholderText="MM/dd/yyyy"
-                                            />
+                                        <div className="form-group" style={{ float: "right",marginTop:"10px" }}>
+                                            <img src={this.state.photoUrl}
+                                                style={{ width: "100px", height: "100px" }} />
                                         </div>
-                                    </div>
 
-                                    <div className="form-group" style={{ float: "right" }}>
-                                        <img src={this.state.photoUrl}
-                                            style={{ width: "100px", height: "100px" }} />
                                     </div>
                                 </form>
                             </div>
 
                             <div className="container">
-                                <button type="submit" className="btn-lg btn-success" onClick={this.saveEmployee}>Save</button>
-                                <button className="btn btn-outline-secondary" onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancel</button>
+                                <button type="submit" className="btn-lg btn-success" style={{width:"40%"}} 
+                                    onClick={this.saveEmployee}>Save</button>
+                                <button className="btn btn-outline-secondary" 
+                                    onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancel</button>
                             </div>
                         </div>
                     </div>
