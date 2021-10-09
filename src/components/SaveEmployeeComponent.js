@@ -189,7 +189,7 @@ export default class SaveEmployeeComponent extends Component {
                                                 <label for="dateOfJoining">Date of Joining</label>
                                                 <ReactDatePicker
                                                     id="dateOfJoining"
-                                                    selected={Date.parse(this.state.dateOfJoining)}
+                                                    selected={Date.parse(this.state.dateOfJoining.toString())}
                                                     dateFormat="dd/MM/yyyy"
                                                     onChange={date => this.changeDateOfJoiningHandler(date)}
                                                     placeholderText="dd/mm/yyyy"
@@ -201,7 +201,7 @@ export default class SaveEmployeeComponent extends Component {
                                                 <label for="dateOfBirth">Date of Birth</label>
                                                 <ReactDatePicker
                                                     id="dateOfBirth"
-                                                    selected={Date.parse(this.state.dateOfBirth)}
+                                                    selected={Date.parse(this.state.dateOfBirth.toString())}
                                                     dateFormat="dd/MM/yyyy"
                                                     onChange={date => this.changeDateOfBirthHandler(date)}
                                                     placeholderText="dd/mm/yyyy"
